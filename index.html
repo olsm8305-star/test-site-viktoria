@@ -6,6 +6,8 @@
 <title>Виктория Смирнова – картины маслом на заказ</title>
 <meta name="description" content="Художница Виктория Смирнова, Тюмень. Портреты по фото, пейзажи, картины под интерьер и копии известных полотен маслом. Доставка по всей России.">
 <meta name="theme-color" content="#0d0a18">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:title" content="Виктория Смирнова – картины маслом на заказ">
 <meta property="og:description" content="Картины маслом по вашей идее. Портреты по фото, пейзажи, картины под интерьер.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0a18'/%3E%3Cpath d='M20 46V18h13a9 9 0 0 1 0 18H20' fill='none' stroke='%239d7dff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -487,17 +489,17 @@ body.locked{overflow:hidden}
     <div class="contacts rv">
       <div>
         <div class="chips">
-          <a class="chip" id="cTg" href="#contacts" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M21 4 3 11l5.5 2L18 7l-7.5 7.5V19l3-3 4.5 3z"/></svg>Telegram</a>
-          <a class="chip" id="cWa" href="#contacts" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 20l1.2-4.1A8 8 0 1 1 8.2 19z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 .7c-.8-.4-1.600-1.200-2-2l.7-1-1-2z"/></svg>WhatsApp</a>
-          <a class="chip" id="cIg" href="#contacts" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.500" y="3.500" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".8" fill="currentColor"/></svg>Instagram</a>
+          <a class="chip" id="cTg" href="#contacts" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M21 4 3 11l5.5 2L18 7l-7.5 7.5V19l3-3 4.5 3z"/></svg>Telegram</a>
+          <a class="chip" id="cWa" href="#contacts" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 20l1.2-4.1A8 8 0 1 1 8.2 19z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 .7c-.8-.4-1.600-1.200-2-2l.7-1-1-2z"/></svg>WhatsApp</a>
+          <a class="chip" id="cIg" href="#contacts" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.500" y="3.500" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".8" fill="currentColor"/></svg>Instagram</a>
         </div>
         <p class="where"><b>Тюмень</b><br>Отправляю картины по всей России. В Тюмени можно забрать лично.</p>
       </div>
 
       <form id="form" novalidate>
         <div class="form-row">
-          <div class="field"><label for="fName">Ваше имя</label><input id="fName" name="name" autocomplete="name" required></div>
-          <div class="field"><label for="fContact">Телефон или Telegram</label><input id="fContact" name="contact" autocomplete="tel" required></div>
+          <div class="field"><label for="fName">Ваше имя</label><input id="fName" name="name" autocomplete="name" maxlength="80" required></div>
+          <div class="field"><label for="fContact">Телефон или Telegram</label><input id="fContact" name="contact" autocomplete="tel" maxlength="80" required></div>
         </div>
         <div class="field"><label for="fType">Что хотите заказать</label>
           <select id="fType" name="type">
@@ -508,7 +510,7 @@ body.locked{overflow:hidden}
             <option>Пока не знаю, нужен совет</option>
           </select>
         </div>
-        <div class="field"><label for="fMsg">Расскажите о картине</label><textarea id="fMsg" name="msg" placeholder="Сюжет, размер, к какой дате нужна"></textarea></div>
+        <div class="field"><label for="fMsg">Расскажите о картине</label><textarea id="fMsg" name="msg" maxlength="1000" placeholder="Сюжет, размер, к какой дате нужна"></textarea></div>
         <div><button class="btn" type="submit">Отправить заявку</button></div>
         <p class="form-note" id="formNote" role="status"></p>
       </form>
@@ -811,7 +813,10 @@ addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(stepsPr
 addEventListener('resize',stepsProgress); stepsProgress();
 
 /* ---------- контакты и заявка ---------- */
-const tg=CONFIG.telegram, wa=CONFIG.whatsapp, ig=CONFIG.instagram;
+/* контакты из CONFIG пропускаются через проверку: в ссылку попадают только допустимые символы */
+const clean=(v,re)=>re.test(v||'')?v:'';
+const tg=clean(CONFIG.telegram,/^[A-Za-z0-9_]{3,32}$/), wa=clean(CONFIG.whatsapp,/^\d{8,15}$/),
+      ig=clean(CONFIG.instagram,/^[A-Za-z0-9._]{1,30}$/), mail=clean(CONFIG.email,/^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/);
 if(tg) $('#cTg').href='https://t.me/'+tg; else $('#cTg').removeAttribute('target');
 if(wa) $('#cWa').href='https://wa.me/'+wa; else $('#cWa').removeAttribute('target');
 if(ig) $('#cIg').href='https://instagram.com/'+ig; else $('#cIg').removeAttribute('target');
@@ -819,14 +824,14 @@ if(ig) $('#cIg').href='https://instagram.com/'+ig; else $('#cIg').removeAttribut
 $('#form').addEventListener('submit',e=>{
   e.preventDefault();
   const note=$('#formNote'), f=e.target;
-  const name=f.name.value.trim(), contact=f.contact.value.trim();
+  const name=f.name.value.trim().slice(0,80), contact=f.contact.value.trim().slice(0,80);
   note.classList.remove('ok');
   if(!name||!contact){ note.textContent='Укажите имя и как с вами связаться.'; (name?f.contact:f.name).focus(); return; }
-  const text=`Здравствуйте, Виктория! Меня зовут ${name}. Хочу заказать: ${f.type.value}.\n${f.msg.value.trim()}\nСвязаться со мной: ${contact}`;
-  if(tg){ window.open('https://t.me/'+tg+'?text='+encodeURIComponent(text),'_blank','noopener'); }
-  else if(wa){ window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(text),'_blank','noopener'); }
-  else if(CONFIG.email){ location.href='mailto:'+CONFIG.email+'?subject='+encodeURIComponent('Заявка на картину')+'&body='+encodeURIComponent(text); }
-  else { note.textContent='Форма пока не подключена: впишите контакты в блок CONFIG в начале скрипта.'; return; }
+  const text=`Здравствуйте, Виктория! Меня зовут ${name}. Хочу заказать: ${f.type.value}.\n${f.msg.value.trim().slice(0,1000)}\nСвязаться со мной: ${contact}`;
+  if(tg){ window.open('https://t.me/'+tg+'?text='+encodeURIComponent(text),'_blank','noopener,noreferrer'); }
+  else if(wa){ window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(text),'_blank','noopener,noreferrer'); }
+  else if(mail){ location.href='mailto:'+mail+'?subject='+encodeURIComponent('Заявка на картину')+'&body='+encodeURIComponent(text); }
+  else { note.textContent='Заявки через сайт пока не принимаются. Попробуйте позже.'; return; }
   note.classList.add('ok'); note.textContent='Спасибо! Заявка готова – отправьте её в открывшемся окне.';
   f.reset();
 });
